@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\ProfileController;
@@ -15,6 +16,8 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/services', [FrontendController::class, 'services'])->name('services');
+Route::get('/galleries', [FrontendController::class, 'galleries'])->name('galleries');
+Route::get('/galleries/{id}', [FrontendController::class, 'show'])->name('galleries.show');
 Route::get('/inquiry', [FrontendController::class, 'inquiry'])->name('inquiry');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
@@ -35,6 +38,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/{media}/edit', [MediaController::class, 'edit'])->name('media.edit');
         Route::put('/{media}', [MediaController::class, 'update'])->name('media.update');
         Route::delete('/{media}', [MediaController::class, 'destroy'])->name('media.destroy');
+    });
+
+    Route::prefix('/gallery')->group(function () {
+        Route::get('/', [GalleryController::class, 'index'])->name('gallery.index');
+        Route::get('/create', [GalleryController::class, 'create'])->name('gallery.create');
+        Route::post('/', [GalleryController::class, 'store'])->name('gallery.store');
+        Route::get('/{gallery}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
+        Route::post('/{gallery}', [GalleryController::class, 'update'])->name('gallery.update');
+        Route::get('/delete/{gallery}', [GalleryController::class, 'delete'])->name('gallery.delete');
     });
     
     Route::prefix('/admin')->group(function () {

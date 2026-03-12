@@ -138,6 +138,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{route('gallery.index')}}">
+                    <iconify-icon icon="solar:letter-bold" class="menu-icon"></iconify-icon>
+                    <span>Gallery</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{route('inquiries.index')}}">
                     <iconify-icon icon="solar:question-circle-bold" class="menu-icon"></iconify-icon>
                     <span>Inquiries</span>

@@ -28,6 +28,9 @@
                     <a class="nav-link {{ request()->routeIs('services') ? 'active' : '' }}" href="{{ route('services') }}"> Services </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('galleries') ? 'active' : '' }}" href="{{ route('galleries') }}"> Galleries </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('inquiry') ? 'active' : '' }}" href="{{ route('inquiry') }}"> Get Quote </a>
                 </li>
                 <li class="nav-item">
