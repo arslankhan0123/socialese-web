@@ -1,11 +1,11 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="{{ route('welcome') }}">
             <img
                 src="{{asset('frontend/assets/img/logo1.png')}}"
                 alt="Tahir Digital Solutions"
-                height="55"
+                height="80"
                 class="me-2" />
             <!-- Tahir Digital Solutions -->
         </a>
@@ -25,17 +25,17 @@
                     <a class="nav-link {{ request()->routeIs('welcome') ? 'active' : '' }}" href="{{ route('welcome') }}"> Home </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('galleries') ? 'active' : '' }}" href="{{ route('galleries') }}"> Gallery </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('services') ? 'active' : '' }}" href="{{ route('services') }}"> Services </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('galleries') ? 'active' : '' }}" href="{{ route('galleries') }}"> Galleries </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('inquiry') ? 'active' : '' }}" href="{{ route('inquiry') }}"> Get Quote </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}"> About Us </a>
-                </li>
+                <!--<li class="nav-item">-->
+                <!--    <a class="nav-link {{ request()->routeIs('inquiry') ? 'active' : '' }}" href="{{ route('inquiry') }}"> Get Quote </a>-->
+                <!--</li>-->
+                <!--<li class="nav-item">-->
+                <!--    <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}"> About Us </a>-->
+                <!--</li>-->
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}"> Contact </a>
                 </li>

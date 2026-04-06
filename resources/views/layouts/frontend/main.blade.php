@@ -222,7 +222,7 @@
         }
 
         .hero-title {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             font-weight: 800;
             color: var(--text-dark);
             line-height: 1.2;

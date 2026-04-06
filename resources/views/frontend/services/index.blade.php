@@ -986,27 +986,27 @@
     }
 </style>
 <!-- Hero Section -->
-<section class="hero-section mt-5">
-    <div class="container mt-5">
-        <div class="row">
-            <div
-                class="col-lg-8 mx-auto text-center hero-content"
-                data-aos="zoom-in"
-                data-aos-duration="1500">
-                <h1 class="hero-title">
-                    Professional IT Services & Technology Solutions
-                </h1>
-                <p class="hero-subtitle">
-                    Comprehensive technology services designed to accelerate your
-                    business growth and digital transformation
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
+<!--<section class="hero-section mt-5">-->
+<!--    <div class="container mt-5">-->
+<!--        <div class="row">-->
+<!--            <div-->
+<!--                class="col-lg-8 mx-auto text-center hero-content"-->
+<!--                data-aos="zoom-in"-->
+<!--                data-aos-duration="1500">-->
+<!--                <h1 class="hero-title">-->
+<!--                    Professional IT Services & Technology Solutions-->
+<!--                </h1>-->
+<!--                <p class="hero-subtitle">-->
+<!--                    Comprehensive technology services designed to accelerate your-->
+<!--                    business growth and digital transformation-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
 
 <!-- Web Development Section -->
-<section class="py-5" style="padding: 6rem 0">
+<section class="py-6" style="padding: 6rem 0">
     <div class="container">
         <div class="row align-items-center mb-5">
             <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">

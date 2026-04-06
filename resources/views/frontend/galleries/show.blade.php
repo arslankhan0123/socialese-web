@@ -1003,23 +1003,23 @@
         }
     </style>
 <!-- Hero Section -->
-<section class="hero-section mt-5">
-    <div class="container mt-5">
-        <div class="row">
-            <div
-                class="col-lg-8 mx-auto text-center hero-content"
-                data-aos="zoom-in"
-                data-aos-duration="1500">
-                <h1 class="hero-title">
-                    {{ $gallery->name }}
-                </h1>
-            </div>
-        </div>
-    </div>
-</section>
+<!--<section class="hero-section mt-5">-->
+<!--    <div class="container mt-5">-->
+<!--        <div class="row">-->
+<!--            <div-->
+<!--                class="col-lg-8 mx-auto text-center hero-content"-->
+<!--                data-aos="zoom-in"-->
+<!--                data-aos-duration="1500">-->
+<!--                <h1 class="hero-title">-->
+<!--                    {{ $gallery->name }}-->
+<!--                </h1>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
 
 <!-- Galleries Section -->
-<section class="py-5" style="padding: 6rem 0">
+<section class="py-6" style="padding: 6rem 0">
     <div class="container py-5">
         <h1 class="mb-4 text-center">{{ $gallery->name }}</h1>
         <p class="text-center mb-5">{{ $gallery->description ?? '' }}</p>

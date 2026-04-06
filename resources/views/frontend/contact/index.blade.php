@@ -1002,25 +1002,25 @@
     }
 </style>
 <!-- Hero Section -->
-<section class="hero-section mt-5">
-    <div class="container mt-5">
-        <div class="row">
-            <div
-                class="col-lg-8 mx-auto text-center hero-content"
-                data-aos="zoom-in"
-                data-aos-duration="1500">
-                <h1 class="hero-title">Get In Touch With Us</h1>
-                <p class="hero-subtitle">
-                    We're here to help you with all your technology needs. Reach out
-                    to our expert team for professional consultation and support.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
+<!--<section class="hero-section mt-5">-->
+<!--    <div class="container mt-5">-->
+<!--        <div class="row">-->
+<!--            <div-->
+<!--                class="col-lg-8 mx-auto text-center hero-content"-->
+<!--                data-aos="zoom-in"-->
+<!--                data-aos-duration="1500">-->
+<!--                <h1 class="hero-title">Get In Touch With Us</h1>-->
+<!--                <p class="hero-subtitle">-->
+<!--                    We're here to help you with all your technology needs. Reach out-->
+<!--                    to our expert team for professional consultation and support.-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
 
 <!-- Contact Information Section -->
-<section class="py-5" style="padding: 6rem 0">
+<section class="py-6" style="padding: 6rem 0">
     <div class="container">
         <div class="row">
             <div
@@ -1034,7 +1034,7 @@
                     <h5>Phone Support</h5>
                     <p class="mb-3">Call us for immediate assistance</p>
                     <div class="mb-2">
-                        <strong>+966 509143463</strong>
+                        <strong>+966 530813251</strong>
                     </div>
                     <small class="">Available 24/7 for emergency support</small>
                 </div>
@@ -1050,10 +1050,10 @@
                     <h5>Email Support</h5>
                     <p class="mb-3">Send us your queries via email</p>
                     <div class="mb-2">
-                        <strong>info@tahirdigital.com</strong>
+                        <strong>tahir@socialesemedia.com</strong>
                     </div>
                     <div class="mb-2">
-                        <strong>support@tahirdigital.com</strong>
+                        <strong>tahirsocial@gmail.com</strong>
                     </div>
                     <small class="text-muted">We respond within 24 hours</small>
                 </div>
@@ -1068,13 +1068,13 @@
                     </div>
                     <h5>Office Address</h5>
                     <p class="mb-3">Visit our office for in-person consultation</p>
+                    <!--<div class="mb-2">-->
+                    <!--    <strong>123 Tech Street</strong>-->
+                    <!--</div>-->
                     <div class="mb-2">
-                        <strong>123 Tech Street</strong>
+                        <strong>RIYADH, JEDDAH, DAMMAM</strong>
                     </div>
-                    <div class="mb-2">
-                        <strong>Lahore, Punjab 54000</strong>
-                    </div>
-                    <small class="text-muted">Pakistan</small>
+                    <small class="text-muted">SAUDI ARABIA</small>
                 </div>
             </div>
         </div>
@@ -1200,7 +1200,7 @@
                             For urgent technical issues, our 24/7 support team is always
                             available.
                         </p>
-                        <a href="tel:+966509143463" class="btn btn-outline-primary">
+                        <a href="tel:+966530813251" class="btn btn-outline-primary">
                             <i class="fas fa-phone me-2"></i>Call Now
                         </a>
                     </div>
@@ -1468,7 +1468,7 @@
                     class="btn btn-outline-light cta-btn-secondary">
                     <i class="fas fa-phone me-2"></i>
                     <span class="btn-text">Call Us Now</span>
-                    <span class="btn-subtext">+966 509143463</span>
+                    <span class="btn-subtext">+966 530813251</span>
                 </a>
             </div>
 
