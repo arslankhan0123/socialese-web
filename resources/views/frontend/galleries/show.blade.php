@@ -50,7 +50,9 @@
         top: 0;
         left: 0;
         pointer-events: none;
-        z-index: 99999;
+        z-index: 9999991;
+
+
         transition: transform 0.1s ease-out;
         box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
         mix-blend-mode: difference;
@@ -65,7 +67,9 @@
         top: 0;
         left: 0;
         pointer-events: none;
-        z-index: 99998;
+        z-index: 9999990;
+
+
         transition: all 0.15s ease-out;
         opacity: 0.7;
     }
@@ -984,7 +988,163 @@
             margin-bottom: 1rem;
         }
     }
+
+    /* Lightbox Styles */
+    .lightbox-overlay {
+        display: none;
+        position: fixed;
+        z-index: 100000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(15px);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        justify-content: center;
+        align-items: center;
+        user-select: none;
+    }
+
+    .lightbox-overlay.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .lightbox-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: scale(0.95);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .lightbox-overlay.active .lightbox-content {
+        transform: scale(1);
+    }
+
+    .lightbox-img {
+        max-width: 100%;
+        max-height: 85vh;
+        border-radius: 12px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+        transition: opacity 0.3s ease;
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 100001;
+        transition: all 0.3s ease;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .lightbox-close:hover {
+        background: var(--gradient-primary);
+        transform: rotate(90deg);
+        border-color: transparent;
+    }
+
+    .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100002;
+        backdrop-filter: blur(5px);
+    }
+
+    .nav-btn:hover {
+        background: var(--gradient-primary);
+        box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        border-color: transparent;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .prev-btn { left: -100px; }
+    .next-btn { right: -100px; }
+
+    @media (max-width: 1200px) {
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+        .nav-btn { width: 50px; height: 50px; }
+    }
+
+    .gallery-item-wrapper {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: var(--shadow-md);
+        transition: all 0.4s ease;
+    }
+
+    .gallery-item-wrapper:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-xl);
+    }
+
+    .gallery-item-wrapper:hover .gallery-img {
+        transform: scale(1.1);
+    }
+
+    .img-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(124, 58, 237, 0.4), rgba(168, 85, 247, 0.4));
+        opacity: 0;
+        transition: 0.4s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .gallery-item-wrapper:hover .img-overlay {
+        opacity: 1;
+    }
+
+    .overlay-icon {
+        color: white;
+        font-size: 2rem;
+        transform: scale(0.5);
+        transition: 0.4s;
+    }
+
+    .gallery-item-wrapper:hover .overlay-icon {
+        transform: scale(1);
+    }
 </style>
+
 <!-- Hero Background -->
     <style>
         .hero-section::before {
@@ -1024,16 +1184,124 @@
         <h1 class="mb-4 text-center">{{ $gallery->name }}</h1>
         <p class="text-center mb-5">{{ $gallery->description ?? '' }}</p>
 
-        <div class="row g-4">
+
+        <div class="row g-4" id="gallery-container">
             @foreach($images as $image)
             <div class="col-md-6 col-lg-4">
-                <img src="{{ asset('storage/'.$image) }}"
-                    style="width:100%;height:250px;object-fit:cover;border-radius:8px;">
+                <div class="gallery-item-wrapper">
+                    <img src="{{ asset('storage/'.$image) }}" 
+                        class="gallery-img" 
+                        alt="{{ $gallery->name }}"
+                        style="width:100%;height:250px;object-fit:cover;border-radius:12px; transition: transform 0.5s ease;">
+                    <div class="img-overlay">
+                        <span class="overlay-icon"><i class="fas fa-expand"></i></span>
+                    </div>
+                </div>
             </div>
             @endforeach
         </div>
+
     </div>
 </section>
 
-<!-- Bootstrap Collapse JS (ensure included in your layout) -->
+
+<!-- Lightbox Structure -->
+<div id="lightbox-overlay" class="lightbox-overlay">
+    <span class="lightbox-close">&times;</span>
+    <div class="lightbox-content">
+        <button id="prev-lightbox" class="nav-btn prev-btn">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <img id="lightbox-main-img" src="" alt="Gallery Preview" class="lightbox-img">
+        
+        <button id="next-lightbox" class="nav-btn next-btn">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const images = Array.from(document.querySelectorAll('.gallery-img'));
+    const lightbox = document.getElementById('lightbox-overlay');
+    const lightboxImg = document.getElementById('lightbox-main-img');
+    const closeBtn = document.querySelector('.lightbox-close');
+    const prevBtn = document.getElementById('prev-lightbox');
+    const nextBtn = document.getElementById('next-lightbox');
+    
+    let currentIndex = 0;
+
+    function openLightbox(index) {
+        currentIndex = index;
+        updateLightbox(true);
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function showNext() {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateLightbox();
+    }
+
+    function showPrev() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateLightbox();
+    }
+
+    function updateLightbox(force = false) {
+        if (!force) {
+            lightboxImg.style.opacity = '0';
+            setTimeout(() => {
+                lightboxImg.src = images[currentIndex].src;
+                lightboxImg.style.opacity = '1';
+            }, 300);
+        } else {
+            lightboxImg.src = images[currentIndex].src;
+            lightboxImg.style.opacity = '1';
+        }
+    }
+
+    // Attach events to thumbnails
+    images.forEach((img, index) => {
+        img.closest('.gallery-item-wrapper').addEventListener('click', () => {
+            openLightbox(index);
+        });
+    });
+
+    // Control events
+    closeBtn.addEventListener('click', closeLightbox);
+    
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showNext();
+    });
+    
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showPrev();
+    });
+    
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+            closeLightbox();
+        }
+    });
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') showNext();
+        if (e.key === 'ArrowLeft') showPrev();
+    });
+});
+</script>
+
 @endsection
