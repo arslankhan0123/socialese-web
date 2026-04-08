@@ -1154,7 +1154,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('{{ asset("storage/".$gallery->feature_image) }}');
+            background-image: url('{{ asset($gallery->feature_image) }}');
             background-size: cover;
             background-position: center;
             opacity: 0.8;
@@ -1189,7 +1189,7 @@
             @foreach($images as $image)
             <div class="col-md-6 col-lg-4">
                 <div class="gallery-item-wrapper">
-                    <img src="{{ asset('storage/'.$image) }}" 
+                    <img src="{{ asset($image) }}" 
                         class="gallery-img" 
                         alt="{{ $gallery->name }}"
                         style="width:100%;height:250px;object-fit:cover;border-radius:12px; transition: transform 0.5s ease;">

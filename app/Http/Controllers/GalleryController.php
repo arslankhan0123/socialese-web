@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class GalleryController extends Controller
 {
@@ -21,28 +22,58 @@ class GalleryController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'feature_image' => ['required', 'image'],
-            'gallery_images' => ['required'],
+            'gallery_images' => ['required', 'array'],
+            'gallery_images.*' => ['image'],
+            'gallery_videos' => ['nullable', 'array'],
+            'gallery_videos.*' => ['mimes:mp4,mov,ogg,qt,webm'],
         ]);
 
+        $uploadPath = public_path('uploads/galleries');
+        if (!File::isDirectory($uploadPath)) {
+            File::makeDirectory($uploadPath, 0777, true, true);
+        }
+
         // feature image upload
-        $featureImage = $request->file('feature_image')->store('galleries', 'public');
+        $featureImage = null;
+        if ($request->hasFile('feature_image')) {
+            $file = $request->file('feature_image');
+            $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move($uploadPath, $fileName);
+            $featureImage = 'uploads/galleries/' . $fileName;
+        }
 
         // gallery images upload
         $galleryImages = [];
         if ($request->hasFile('gallery_images')) {
             foreach ($request->file('gallery_images') as $image) {
-                $path = $image->store('galleries', 'public');
-                $galleryImages[] = $path;
+                if ($image->isValid()) {
+                    $fileName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $image->move($uploadPath, $fileName);
+                    $galleryImages[] = 'uploads/galleries/' . $fileName;
+                }
+            }
+        }
+
+        // gallery videos upload
+        $galleryVideos = [];
+        if ($request->hasFile('gallery_videos')) {
+            foreach ($request->file('gallery_videos') as $video) {
+                if ($video->isValid()) {
+                    $fileName = time() . '_' . uniqid() . '.' . $video->getClientOriginalExtension();
+                    $video->move($uploadPath, $fileName);
+                    $galleryVideos[] = 'uploads/galleries/' . $fileName;
+                }
             }
         }
 
         Gallery::create([
-            'name' => $validated['name'],
+            'name' => $request->name,
             'feature_image' => $featureImage,
-            'gallery_images' => json_encode($galleryImages), // store as json
+            'gallery_images' => array_values($galleryImages),
+            'gallery_videos' => array_values($galleryVideos),
         ]);
 
         return redirect()->route('gallery.index')->with('success', 'Gallery created successfully.');
@@ -56,49 +87,100 @@ class GalleryController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $gallery = Gallery::findOrFail($id);
 
-        $galleryImages = json_decode($gallery->gallery_images, true);
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'feature_image' => ['nullable', 'image'],
+            'gallery_images' => ['nullable', 'array'],
+            'gallery_images.*' => ['image'],
+            'gallery_videos' => ['nullable', 'array'],
+            'gallery_videos.*' => ['mimes:mp4,mov,ogg,qt,webm'],
+        ]);
+        $currentImages = is_array($gallery->gallery_images) ? $gallery->gallery_images : [];
+        $currentVideos = is_array($gallery->gallery_videos) ? $gallery->gallery_videos : [];
 
+        $uploadPath = public_path('uploads/galleries');
+        if (!File::isDirectory($uploadPath)) {
+            File::makeDirectory($uploadPath, 0777, true, true);
+        }
 
-        if ($request->delete_images) {
-
+        // Delete selected images via checkboxes
+        if ($request->delete_images && is_array($request->delete_images)) {
             foreach ($request->delete_images as $img) {
-
-                Storage::disk('public')->delete($img);
-
-                $galleryImages = array_diff($galleryImages, [$img]);
+                if ($img && File::exists(public_path($img))) {
+                    File::delete(public_path($img));
+                }
+                $currentImages = array_diff($currentImages, [$img]);
             }
         }
 
+        // Delete selected videos via checkboxes
+        if ($request->delete_videos && is_array($request->delete_videos)) {
+            foreach ($request->delete_videos as $vid) {
+                if ($vid && File::exists(public_path($vid))) {
+                    File::delete(public_path($vid));
+                }
+                $currentVideos = array_diff($currentVideos, [$vid]);
+            }
+        }
 
+        // Upload new gallery images (REPLACE existing if new ones provided)
         if ($request->hasFile('gallery_images')) {
+            // Delete ALL current images first
+            foreach ($currentImages as $img) {
+                if ($img && File::exists(public_path($img))) {
+                    File::delete(public_path($img));
+                }
+            }
+            $currentImages = []; // Reset array
 
             foreach ($request->file('gallery_images') as $image) {
-
-                $path = $image->store('galleries', 'public');
-
-                $galleryImages[] = $path;
+                if ($image->isValid()) {
+                    $fileName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $image->move($uploadPath, $fileName);
+                    $currentImages[] = 'uploads/galleries/' . $fileName;
+                }
             }
         }
 
+        // Upload new gallery videos (REPLACE existing if new ones provided)
+        if ($request->hasFile('gallery_videos')) {
+            // Delete ALL current videos first
+            foreach ($currentVideos as $vid) {
+                if ($vid && File::exists(public_path($vid))) {
+                    File::delete(public_path($vid));
+                }
+            }
+            $currentVideos = []; // Reset array
 
-        if ($request->hasFile('feature_image')) {
-
-            Storage::disk('public')->delete($gallery->feature_image);
-
-            $gallery->feature_image = $request->file('feature_image')->store('galleries', 'public');
+            foreach ($request->file('gallery_videos') as $video) {
+                if ($video->isValid()) {
+                    $fileName = time() . '_' . uniqid() . '.' . $video->getClientOriginalExtension();
+                    $video->move($uploadPath, $fileName);
+                    $currentVideos[] = 'uploads/galleries/' . $fileName;
+                }
+            }
         }
 
+        // Update feature image
+        $featureImage = $gallery->feature_image;
+        if ($request->hasFile('feature_image')) {
+            if ($featureImage && File::exists(public_path($featureImage))) {
+                File::delete(public_path($featureImage));
+            }
+            $file = $request->file('feature_image');
+            $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move($uploadPath, $fileName);
+            $featureImage = 'uploads/galleries/' . $fileName;
+        }
 
         $gallery->update([
-
             'name' => $request->name,
-            'gallery_images' => json_encode(array_values($galleryImages))
-
+            'feature_image' => $featureImage,
+            'gallery_images' => array_values($currentImages),
+            'gallery_videos' => array_values($currentVideos)
         ]);
-
 
         return redirect()->route('gallery.index')->with('success', 'Gallery updated successfully');
     }
@@ -160,20 +242,23 @@ class GalleryController extends Controller
         $gallery = Gallery::findOrFail($id);
 
         // Delete feature image
-        if ($gallery->feature_image && Storage::disk('public')->exists($gallery->feature_image)) {
-            Storage::disk('public')->delete($gallery->feature_image);
+        if ($gallery->feature_image && File::exists(public_path($gallery->feature_image))) {
+            File::delete(public_path($gallery->feature_image));
         }
 
         // Delete gallery images
-        if ($gallery->gallery_images) {
-            $images = json_decode($gallery->gallery_images, true);
+        $images = is_array($gallery->gallery_images) ? $gallery->gallery_images : [];
+        foreach ($images as $image) {
+            if (File::exists(public_path($image))) {
+                File::delete(public_path($image));
+            }
+        }
 
-            if (is_array($images)) {
-                foreach ($images as $image) {
-                    if (Storage::disk('public')->exists($image)) {
-                        Storage::disk('public')->delete($image);
-                    }
-                }
+        // Delete gallery videos
+        $videos = is_array($gallery->gallery_videos) ? $gallery->gallery_videos : [];
+        foreach ($videos as $video) {
+            if (File::exists(public_path($video))) {
+                File::delete(public_path($video));
             }
         }
 

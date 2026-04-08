@@ -21,7 +21,7 @@ class FrontendController extends Controller
     public function show($id)
     {
         $gallery = Gallery::findOrFail($id);
-        $images = json_decode($gallery->gallery_images);
+        $images = is_array($gallery->gallery_images) ? $gallery->gallery_images : [];
 
         return view('frontend.galleries.show', compact('gallery', 'images'));
     }

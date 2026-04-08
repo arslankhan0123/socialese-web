@@ -11,9 +11,13 @@ class Gallery extends Model
         'link',
         'feature_image',
         'gallery_images',
+        'gallery_videos',
     ];
 
     protected $casts = [
         'gallery_images' => 'array',
+        'gallery_videos' => 'array',
     ];
+
 }
+

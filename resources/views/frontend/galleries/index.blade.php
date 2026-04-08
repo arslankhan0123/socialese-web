@@ -1021,7 +1021,7 @@
                     <div class="service-card card">
                         <div class="card-body text-center">
                             <img
-                                src="{{ asset('storage/'.$gallery->feature_image) }}"
+                                src="{{ asset($gallery->feature_image) }}"
                                 alt="{{ $gallery->name }}"
                                 style="width:100%;height:200px;object-fit:cover;border-radius:6px;">
                             <div class="p-3">

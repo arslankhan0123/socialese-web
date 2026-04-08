@@ -112,15 +112,18 @@ use Illuminate\Support\Str;
                             {{-- Feature Image --}}
                             <td>
                                 <img
-                                    src="{{ asset('storage/'.$gallery->feature_image) }}"
+                                    src="{{ asset($gallery->feature_image) }}"
                                     style="width:60px;height:60px;object-fit:cover;border-radius:6px;border:1px solid #ddd;">
                             </td>
 
                             {{-- Gallery Images --}}
                             <td>
-                                @foreach (json_decode($gallery->gallery_images) as $image)
+                                @php
+                                    $images = is_array($gallery->gallery_images) ? $gallery->gallery_images : [];
+                                @endphp
+                                @foreach ($images as $image)
                                 <img
-                                    src="{{ asset('storage/'.$image) }}"
+                                    src="{{ asset($image) }}"
                                     style="width:60px;height:60px;object-fit:cover;border-radius:6px;margin-right:5px;border:1px solid #ddd;">
                                 @endforeach
                             </td>

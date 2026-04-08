@@ -105,6 +105,26 @@
                             </div>
                         </div>
                         <div class="col-md-12">
+                            <label class="form-label">Gallery Videos</label>
+                            <div id="multipleVideosPreview" class="mb-2 d-flex flex-wrap gap-2"></div>
+                            <div class="has-validation">
+                                <input
+                                    type="file"
+                                    name="gallery_videos[]"
+                                    id="multipleVideosInput"
+                                    class="form-control @error('gallery_videos.*') is-invalid @enderror"
+                                    accept="video/*"
+                                    multiple />
+                                <small class="text-muted">You can select multiple videos (mp4, webm, etc.)</small>
+                                @error('gallery_videos.*')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
                             <button
                                 class="btn btn-primary-600 d-inline-flex align-items-center"
                                 type="submit">
@@ -126,6 +146,77 @@
 <script src="{{asset('backend/assets/js/editor.highlighted.min.js')}}"></script>
 <script src="{{asset('backend/assets/js/editor.quill.js')}}"></script>
 <script src="{{asset('backend/assets/js/editor.katex.min.js')}}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Single Image Preview
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+
+    if(imageInput) {
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Multiple Images Preview
+    const multipleImagesInput = document.getElementById('multipleImagesInput');
+    const multipleImagesPreview = document.getElementById('multipleImagesPreview');
+
+    if(multipleImagesInput) {
+        multipleImagesInput.addEventListener('change', function() {
+            multipleImagesPreview.innerHTML = '';
+            Array.from(this.files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const div = document.createElement('div');
+                    div.innerHTML = `<img src="${e.target.result}" style="width:80px;height:80px;object-fit:cover;border-radius:4px;border:1px solid #ddd">`;
+                    multipleImagesPreview.appendChild(div);
+                }
+                reader.readAsDataURL(file);
+            });
+        });
+    }
+
+    // Multiple Videos Preview
+    const multipleVideosInput = document.getElementById('multipleVideosInput');
+    const multipleVideosPreview = document.getElementById('multipleVideosPreview');
+
+    if(multipleVideosInput) {
+        multipleVideosInput.addEventListener('change', function() {
+            multipleVideosPreview.innerHTML = '';
+            Array.from(this.files).forEach(file => {
+                const div = document.createElement('div');
+                div.style.position = 'relative';
+                const video = document.createElement('video');
+                video.src = URL.createObjectURL(file);
+                video.style.width = '80px';
+                video.style.height = '80px';
+                video.style.objectFit = 'cover';
+                video.style.borderRadius = '4px';
+                video.style.border = '1px solid #ddd';
+                div.appendChild(video);
+                
+                const icon = document.createElement('div');
+                icon.innerHTML = '<i class="fas fa-play" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;font-size:10px;"></i>';
+                div.appendChild(icon);
+                
+                multipleVideosPreview.appendChild(div);
+            });
+        });
+    }
+});
+</script>
+
 
 @endsection
 
