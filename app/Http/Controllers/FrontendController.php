@@ -22,8 +22,9 @@ class FrontendController extends Controller
     {
         $gallery = Gallery::findOrFail($id);
         $images = is_array($gallery->gallery_images) ? $gallery->gallery_images : [];
+        $videos = is_array($gallery->gallery_videos) ? $gallery->gallery_videos : [];
 
-        return view('frontend.galleries.show', compact('gallery', 'images'));
+        return view('frontend.galleries.show', compact('gallery', 'images', 'videos'));
     }
 
     public function inquiry()

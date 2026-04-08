@@ -1185,7 +1185,13 @@
         <p class="text-center mb-5">{{ $gallery->description ?? '' }}</p>
 
 
-        <div class="row g-4" id="gallery-container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h2 class="section-title">Gallery Images</h2>
+            </div>
+        </div>
+
+        <div class="row g-4 justify-content-center" id="gallery-container">
             @foreach($images as $image)
             <div class="col-md-6 col-lg-4">
                 <div class="gallery-item-wrapper">
@@ -1200,6 +1206,26 @@
             </div>
             @endforeach
         </div>
+
+        @if(count($videos) > 0)
+        <div class="row mt-5">
+            <div class="col-12 text-center mb-4">
+                <h2 class="section-title">Gallery Videos</h2>
+            </div>
+            <div class="row g-4 justify-content-center">
+                @foreach($videos as $video)
+                <div class="col-md-6 col-lg-4">
+                    <div class="gallery-item-wrapper" style="cursor: default;">
+                        <video controls style="width:100%;height:250px;object-fit:cover;border-radius:12px;border: 1px solid rgba(124, 58, 237, 0.2);">
+                            <source src="{{ asset($video) }}">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
 
     </div>
 </section>
