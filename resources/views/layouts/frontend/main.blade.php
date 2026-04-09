@@ -798,8 +798,84 @@
             bottom: 0;
             background:
                 radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
-            z-index: 0;
+                radial-gradient(circle at 80% 70%, rgba(124, 58, 237, 0.08) 0%, transparent 50%);
+        }
+
+        /* Marquee Styles */
+        .marquee-section {
+            padding: 60px 0;
+            background: var(--white);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 60px;
+            animation: marquee-scroll 40s linear infinite;
+            padding: 20px 0;
+            width: max-content;
+        }
+
+        @keyframes marquee-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 180px;
+            transition: transform 0.3s ease;
+        }
+
+        .marquee-item img {
+            height: 50px;
+            width: auto;
+            max-width: 150px;
+            object-fit: contain;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+        }
+
+        .marquee-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .marquee-item:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .marquee-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .marquee-section-title {
+            text-align: center;
+            font-size: 1rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            font-weight: 700;
+            opacity: 0.8;
         }
 
         .contact-form-section .container {
@@ -1316,29 +1392,35 @@
         }
 
         // Video thumbnail click handler
-        document.querySelectorAll('.video-thumbnail').forEach(thumbnail => {
-            const video = thumbnail.querySelector('video');
-            const videoUrl = thumbnail.getAttribute('data-video-url');
+        const videoModalElement = document.getElementById('videoModal');
+        const modalVideo = document.getElementById('modalVideo');
+        let bsVideoModal = null;
+
+        if (videoModalElement) {
+            bsVideoModal = new bootstrap.Modal(videoModalElement);
             
-            if (video || videoUrl) {
+            document.querySelectorAll('.video-thumbnail').forEach(thumbnail => {
                 thumbnail.addEventListener('click', function() {
-                    if (video) {
-                        // If video element exists, toggle play/pause
-                        if (video.paused) {
-                            video.play();
-                            video.muted = false;
-                            thumbnail.querySelector('.play-button').style.display = 'none';
-                        } else {
-                            video.pause();
-                            thumbnail.querySelector('.play-button').style.display = 'flex';
-                        }
-                    } else if (videoUrl) {
-                        // Open video in new window or modal
-                        window.open(videoUrl, '_blank');
+                    const videoUrl = this.getAttribute('data-video-url');
+                    if (videoUrl && modalVideo) {
+                        const modalSource = modalVideo.querySelector('source');
+                        modalSource.src = videoUrl;
+                        modalVideo.load();
+                        bsVideoModal.show();
+                        modalVideo.play();
                     }
                 });
-            }
-        });
+            });
+
+            // Stop video when modal is closed
+            videoModalElement.addEventListener('hidden.bs.modal', function() {
+                if (modalVideo) {
+                    modalVideo.pause();
+                    modalVideo.querySelector('source').src = "";
+                    modalVideo.load();
+                }
+            });
+        }
     </script>
 </body>
 

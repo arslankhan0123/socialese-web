@@ -43,7 +43,7 @@
             @forelse($videos->take(12) as $index => $video)
                 <div class="video-wrapper">
                     <div class="video-thumbnail" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}" data-video-url="{{ asset($video->media_url) }}">
-                        <video muted preload="metadata">
+                        <video muted autoplay loop playsinline preload="metadata">
                             <source src="{{ asset($video->media_url) }}" type="video/mp4">
                         </video>
                         <div class="play-button">
@@ -59,6 +59,67 @@
         </div>
         <div class="text-center mt-5 pt-4">
             <a href="{{ route('inquiry') }}" class="btn-cta" data-aos="fade-up">Get a Free Quote <i class="fas fa-arrow-right ms-2"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- Trusted Companies Marquee Section -->
+<section class="marquee-section">
+    <div class="container-fluid">
+        <h3 class="marquee-section-title" data-aos="fade-up">Trusted by Industry Leaders</h3>
+        <div class="marquee-container">
+            <div class="marquee-content">
+                <div class="marquee-item">
+                    <img src="{{ asset('frontend/assets/img/logo1.png') }}" alt="Global Events">
+                    <span class="marquee-name">Global Events</span>
+                </div>
+                <div class="marquee-item">
+                    <img src="{{ asset('frontend/assets/img/logo2.png') }}" alt="Tech Summit">
+                    <span class="marquee-name">Tech Summit</span>
+                </div>
+                <div class="marquee-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+                    <span class="marquee-name">Google</span>
+                </div>
+                <div class="marquee-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM">
+                    <span class="marquee-name">IBM</span>
+                </div>
+                <div class="marquee-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Microsoft">
+                    <span class="marquee-name">Microsoft</span>
+                </div>
+                <div class="marquee-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+                    <span class="marquee-name">Netflix</span>
+                </div>
+                
+                <!-- Repeat for seamless loop -->
+                <div class="marquee-item">
+                    <img src="{{ asset('frontend/assets/img/logo1.png') }}" alt="Global Events">
+                    <span class="marquee-name">Global Events</span>
+                </div>
+                <div class="marquee-item">
+                    <img src="{{ asset('frontend/assets/img/logo2.png') }}" alt="Tech Summit">
+                    <span class="marquee-name">Tech Summit</span>
+                </div>
+                <div class="marquee-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+                    <span class="marquee-name">Google</span>
+                </div>
+                <div class="marquee-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM">
+                    <span class="marquee-name">IBM</span>
+                </div>
+                <div class="marquee-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Microsoft">
+                    <span class="marquee-name">Microsoft</span>
+                </div>
+                <div class="marquee-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+                    <span class="marquee-name">Netflix</span>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -246,4 +307,21 @@
         </div>
     </div>
 </section>
+<!-- Video Modal -->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow-lg border-0" style="border-radius: 20px; background: #000; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;">
+            <div class="modal-body p-0 position-relative">
+                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-3" data-bs-dismiss="modal" aria-label="Close" style="background-color: rgba(0,0,0,0.5); padding: 10px; border-radius: 50%;"></button>
+                <div style="background: #000; display: flex; align-items: center; justify-content: center; min-height: 400px;">
+                    <video id="modalVideo" controls class="w-100" style="max-height: 85vh; display: block;">
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
