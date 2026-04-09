@@ -4,7 +4,69 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@yield('title', 'Home')</title>
+    <title>@yield('title', 'Socialese Media') | Professional Videography & Photography Saudi Arabia</title>
+    
+    <meta name="description" content="Socialese Media provides professional videography and photography in Riyadh, Jeddah, and across Saudi Arabia. Specializing in corporate events, product shoots, and media production." />
+    <meta name="keywords" content="Videographer in Riyadh, Photographer in Riyadh, Videographer in Jeddah, Photographer in Jeddah, Videographer in Saudi Arabia, Photographer in Saudi Arabia, Corporate Videography Saudi Arabia, Corporate Photography Saudi Arabia, Product Photography Saudi Arabia, Media Production Saudi Arabia" />
+    <link rel="canonical" href="{{ url()->current() }}" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:title" content="@yield('title', 'Socialese Media') | Professional Videography & Photography" />
+    <meta property="og:description" content="Professional event and corporate videography & photography services in Riyadh and Saudi Arabia." />
+    <meta property="og:image" content="{{ asset('frontend/assets/img/logo.png') }}" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="{{ url()->current() }}" />
+    <meta property="twitter:title" content="@yield('title', 'Socialese Media') | Professional Videography & Photography" />
+    <meta property="twitter:description" content="Professional event and corporate videography & photography services in Riyadh and Saudi Arabia." />
+    <meta property="twitter:image" content="{{ asset('frontend/assets/img/logo.png') }}" />
+
+    @yield('meta')
+
+    <!-- Local Business Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Socialese Media",
+      "image": "{{ asset('frontend/assets/img/logo.png') }}",
+      "@id": "{{ url('/') }}",
+      "url": "{{ url('/') }}",
+      "telephone": "+966 509143463",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Riyadh",
+        "addressLocality": "Riyadh",
+        "addressRegion": "Riyadh",
+        "postalCode": "11564",
+        "addressCountry": "SA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 24.7136,
+        "longitude": 46.6753
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Sunday"
+        ],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      "sameAs": [
+        "https://www.facebook.com/socialesemedia",
+        "https://www.instagram.com/socialesemedia"
+      ]
+    }
+    </script>
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         rel="stylesheet" />

@@ -1,6 +1,8 @@
 @extends('layouts.frontend.main')
 @section('title', 'Home')
 @section('meta')
+    <meta name="description" content="Professional Videographer and Photographer in Riyadh & Saudi Arabia. Socialese Media specializes in Corporate Videography, Product Photography, and Event Coverage in Riyadh, Jeddah, and across the Kingdom." />
+    <meta name="keywords" content="Videographer in Riyadh, Photographer in Riyadh, Videographer in Jeddah, Photographer in Jeddah, Corporate Videography Saudi Arabia, Event Videography Riyadh, Media Production Saudi Arabia" />
 @endsection
 @section('content')
 
@@ -10,7 +12,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="hero-title" data-aos="fade-up">End to end event Videography & Photography for businesses</h1>
+                <h1 class="hero-title" data-aos="fade-up">Professional Event Videography & Photography in Riyadh, Saudi Arabia</h1>
                 <a href="{{ route('inquiry') }}" class="btn-cta" data-aos="fade-up" data-aos-delay="200">
                     Get a Free Quote <i class="fas fa-arrow-right ms-2"></i>
                 </a>
@@ -22,7 +24,7 @@
                 <div class="stagger-wrapper">
                     <img
                         src="{{ asset($image->media_url) }}"
-                        alt="{{ $image->title ?? 'Conference Image' }}"
+                        alt="{{ $image->title ?? 'Professional Photographer and Videographer in Riyadh Saudi Arabia' }}"
                         data-aos="fade-up"
                         data-aos-delay="{{ ($index + 1) * 100 }}" />
                 </div>
@@ -37,7 +39,7 @@
 <section class="video-gallery-section">
     <div class="container">
         <h2 class="video-gallery-title">
-            A Glimpse from our event<br>videography shoots
+            Event Videography & Corporate Shoot Highlights in Riyadh
         </h2>
         <div class="video-grid">
             @forelse($videos->take(12) as $index => $video)
